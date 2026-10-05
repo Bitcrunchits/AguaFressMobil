@@ -9,6 +9,7 @@ import {
 import { getCustomerPortfolio } from '@/features/customers/services/customers.service';
 import { useSession } from '@/features/auth/useSession';
 import { ApiError } from '@/lib/api/api.types';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 export default function VendedorHomeScreen() {
   const { token, user, signOut } = useSession();
@@ -77,7 +78,7 @@ export default function VendedorHomeScreen() {
         </Text>
 
         {isLoadingCustomers ? (
-          <View style={styles.skeleton} />
+          <Skeleton width={60} height={32} />
         ) : customerError ? (
           <Text style={styles.error}>
             {customerError}
@@ -147,14 +148,6 @@ const styles = StyleSheet.create({
   cardValue: {
     fontSize: 32,
     fontWeight: '700',
-  },
-
-  skeleton: {
-    width: 60,
-    height: 32,
-    borderRadius: 6,
-    opacity: 0.2,
-    backgroundColor: '#777',
   },
 
   error: {
