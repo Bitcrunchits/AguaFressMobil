@@ -10,6 +10,8 @@ import { getCustomerPortfolio } from '@/features/customers/services/customers.se
 import { useSession } from '@/features/auth/useSession';
 import { ApiError } from '@/lib/api/api.types';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { router } from 'expo-router';
+
 
 export default function VendedorHomeScreen() {
   const { token, user, signOut } = useSession();
@@ -91,14 +93,16 @@ export default function VendedorHomeScreen() {
       </View>
 
       <Pressable
-        onPress={handleSignOut}
+        onPress={() =>
+          router.push('/vendedor/clientes')
+        }
         style={({ pressed }) => [
           styles.button,
           pressed && styles.buttonPressed,
         ]}
       >
         <Text style={styles.buttonText}>
-          Cerrar sesión
+          Mis clientes
         </Text>
       </Pressable>
     </View>
@@ -170,4 +174,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+
+  actions: {
+  gap: 12,
+},
 });
