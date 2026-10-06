@@ -1,56 +1,106 @@
-# Welcome to your Expo app 👋
+# Aguafress Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación móvil de **Aguafress**, desarrollada con React Native y Expo.
 
-## Get started
+El proyecto permite gestionar las operaciones principales de vendedores y clientes conectándose al backend de Aguafress mediante su API.
 
-1. Install dependencies
+## Tecnologías
 
-   ```bash
-   npm install
-   ```
+- React Native
+- Expo
+- Expo Router
+- TypeScript
+- NetInfo
+- Expo SecureStore
 
-2. Start the app
+## Roles
 
-   ```bash
-   npx expo start
-   ```
+La aplicación móvil está orientada principalmente a:
 
-In the output, you'll find options to open the app in a
+- **Vendedor**
+- **Cliente**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Actualmente el desarrollo se encuentra enfocado en las funcionalidades del **Vendedor**.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Funcionalidades implementadas
 
-## Get a fresh project
+### Autenticación
 
-When you're ready, run:
+- Login contra la API real.
+- Manejo de sesión mediante JWT.
+- Persistencia segura de sesión.
+- Cierre de sesión.
+- Navegación según el rol.
 
-```bash
-npm run reset-project
+### Conectividad
+
+- Detección del estado de red mediante NetInfo.
+- Aviso global cuando el dispositivo se encuentra sin conexión.
+- Manejo de errores de comunicación con la API.
+
+### Vendedor
+
+Actualmente se encuentra implementada la gestión inicial de clientes:
+
+- Consulta de cartera de clientes.
+- Listado de clientes.
+- Detalle de cliente.
+- Edición de datos personales.
+- Edición de dirección de entrega.
+- Opción para utilizar la misma dirección del cliente como dirección de entrega.
+- Estados de carga mediante Skeleton.
+- Estados de error y envío de formularios.
+
+## Estructura general
+
+```text
+src/
+├── app/
+│   ├── (public)/
+│   └── (private)/
+├── components/
+├── features/
+├── network/
+├── lib/
+├── hooks/
+├── constants/
+└── types/
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+El proyecto utiliza una arquitectura organizada por funcionalidades (`features`) y navegación mediante Expo Router.
 
-### Other setup steps
+## Configuración
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Crear un archivo `.env` en la raíz del proyecto:
 
-## Learn more
+```env
+EXPO_PUBLIC_API_URL=http://IP_DEL_BACKEND:3000
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+En dispositivos físicos, la IP debe ser accesible desde la misma red local donde se encuentra ejecutándose el backend.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Ejecutar el proyecto
 
-## Join the community
+Instalar dependencias:
 
-Join our community of developers creating universal apps.
+```bash
+npm install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Iniciar Expo:
+
+```bash
+npx expo start
+```
+
+Comprobar TypeScript:
+
+```bash
+npx tsc --noEmit
+```
+
+## Estado del proyecto
+
+Proyecto actualmente **en desarrollo**.
+
+Las funcionalidades se están implementando de forma incremental y conectadas contra la API real de Aguafress.
