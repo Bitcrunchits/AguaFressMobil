@@ -3,6 +3,7 @@ import { apiRequest } from '@/lib/api/api-client';
 import type {
   Customer,
   CustomerPortfolioResponse,
+  UpdateCustomerData,
 } from '../customers.types';
 
 type GetCustomerPortfolioParams = {
@@ -12,6 +13,12 @@ type GetCustomerPortfolioParams = {
 type GetCustomerByIdParams = {
   id: string;
   token: string;
+};
+
+type UpdateCustomerParams = {
+  id: string;
+  token: string;
+  data: UpdateCustomerData;
 };
 
 export function getCustomerPortfolio({
@@ -35,6 +42,21 @@ export function getCustomerById({
     {
       method: 'GET',
       token,
+    }
+  );
+}
+
+export function updateCustomer({
+  id,
+  token,
+  data,
+}: UpdateCustomerParams): Promise<Customer> {
+  return apiRequest<Customer>(
+    `/api/v1/clientes/own/update/${encodeURIComponent(id)}`,
+    {
+      method: 'PATCH',
+      token,
+      body: JSON.stringify(data),
     }
   );
 }

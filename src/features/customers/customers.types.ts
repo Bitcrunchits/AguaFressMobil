@@ -9,6 +9,26 @@ export type CustomerPortfolioCount = {
   cartera: number;
 };
 
+export type CustomerDeliveryAddress = {
+  calle?: string;
+  numero?: string;
+  pisoDepto?: string;
+  referencia?: string;
+  barrio?: string;
+  ciudad?: string;
+  provincia?: string;
+  codigoPostal?: string;
+  latitude?: number;
+  longitude?: number;
+};
+
+export type UpdateCustomerData = {
+  nombre?: string;
+  apellido?: string;
+  telefono?: string;
+  direccionEntrega?: CustomerDeliveryAddress;
+};
+
 export type Customer = {
   id: string;
   auth_user_id: string;
