@@ -9,24 +9,35 @@ export type CustomerPortfolioCount = {
   cartera: number;
 };
 
-export type CustomerDeliveryAddress = {
-  calle?: string;
-  numero?: string;
-  pisoDepto?: string;
-  referencia?: string;
-  barrio?: string;
-  ciudad?: string;
-  provincia?: string;
-  codigoPostal?: string;
-  latitude?: number;
-  longitude?: number;
-};
-
 export type UpdateCustomerData = {
   nombre?: string;
   apellido?: string;
+  dni?: string;
   telefono?: string;
-  direccionEntrega?: CustomerDeliveryAddress;
+  tipoFactura?: string;
+
+  direccionCalle?: string;
+  direccionNumero?: string;
+  direccionPiso?: string;
+  direccionReferencia?: string;
+  direccionBarrio?: string;
+  direccionCiudad?: string;
+  direccionProvincia?: string;
+  direccionCp?: string;
+
+  mismaDireccionEntrega?: boolean;
+
+  entregaCalle?: string;
+  entregaNumero?: string;
+  entregaPiso?: string;
+  entregaReferencia?: string;
+  entregaBarrio?: string;
+  entregaCiudad?: string;
+  entregaProvincia?: string;
+  entregaCp?: string;
+
+  latitud?: number;
+  longitud?: number;
 };
 
 export type Customer = {
