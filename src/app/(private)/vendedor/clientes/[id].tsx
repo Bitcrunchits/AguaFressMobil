@@ -93,36 +93,10 @@ export default function CustomerDetailScreen() {
                 </View>
             ) : customer ? (
                 <>
-                    <View style={styles.card}>
-                        <Text style={styles.name}>
-                            {customer.nombre} {customer.apellido}
-                        </Text>
-
-                        <Text style={styles.label}>
-                            DNI
-                        </Text>
-                        <Text style={styles.value}>
-                            {customer.dni}
-                        </Text>
-
-                        <Text style={styles.label}>
-                            Teléfono
-                        </Text>
-                        <Text style={styles.value}>
-                            {customer.telefono}
-                        </Text>
-
-                        <Text style={styles.label}>
-                            Tipo de factura
-                        </Text>
-                        <Text style={styles.value}>
-                            {customer.tipo_factura}
-                        </Text>
-                    </View>
 
                     <View style={styles.card}>
                         <Text style={styles.sectionTitle}>
-                            Dirección
+                            Dirección del cliente
                         </Text>
 
                         <Text style={styles.value}>
@@ -154,13 +128,68 @@ export default function CustomerDetailScreen() {
                                 <Text style={styles.label}>
                                     Referencia
                                 </Text>
-
                                 <Text style={styles.value}>
                                     {customer.direccion_referencia}
                                 </Text>
                             </>
                         ) : null}
                     </View>
+
+                    <View style={styles.card}>
+                        <Text style={styles.sectionTitle}>
+                            Dirección de entrega
+                        </Text>
+
+                        {customer.misma_direccion_entrega ? (
+                            <Text style={styles.value}>
+                                Se utiliza la misma dirección del cliente.
+                            </Text>
+                        ) : (
+                            <>
+                                <Text style={styles.value}>
+                                    {customer.entrega_calle}{' '}
+                                    {customer.entrega_numero}
+                                </Text>
+
+                                {customer.entrega_piso ? (
+                                    <Text style={styles.value}>
+                                        Piso {customer.entrega_piso}
+                                    </Text>
+                                ) : null}
+
+                                {customer.entrega_barrio ? (
+                                    <Text style={styles.value}>
+                                        {customer.entrega_barrio}
+                                    </Text>
+                                ) : null}
+
+                                <Text style={styles.value}>
+                                    {customer.entrega_ciudad},{' '}
+                                    {customer.entrega_provincia}
+                                </Text>
+
+                                {customer.entrega_cp ? (
+                                    <Text style={styles.value}>
+                                        CP {customer.entrega_cp}
+                                    </Text>
+                                ) : null}
+
+                                {customer.entrega_referencia ? (
+                                    <>
+                                        <Text style={styles.label}>
+                                            Referencia de entrega
+                                        </Text>
+                                        <Text style={styles.value}>
+                                            {customer.entrega_referencia}
+                                        </Text>
+                                    </>
+                                ) : null}
+                            </>
+                        )}
+                    </View>
+
+
+
 
                     {/* BOTÓN NUEVO */}
                     <Pressable
