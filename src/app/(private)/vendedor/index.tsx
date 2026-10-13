@@ -92,19 +92,32 @@ export default function VendedorHomeScreen() {
         )}
       </View>
 
-      <Pressable
-        onPress={() =>
-          router.push('/vendedor/clientes')
-        }
-        style={({ pressed }) => [
-          styles.button,
-          pressed && styles.buttonPressed,
-        ]}
-      >
-        <Text style={styles.buttonText}>
-          Mis clientes
-        </Text>
-      </Pressable>
+      <View style={styles.actions}>
+        <Pressable
+          onPress={() => router.push('/vendedor/clientes')}
+          style={({ pressed }) => [
+            styles.button,
+            pressed && styles.buttonPressed,
+          ]}
+        >
+          <Text style={styles.buttonText}>
+            Mis clientes
+          </Text>
+        </Pressable>
+
+        <Pressable
+          onPress={handleSignOut}
+          style={({ pressed }) => [
+            styles.button,
+            styles.logoutButton,
+            pressed && styles.buttonPressed,
+          ]}
+        >
+          <Text style={styles.logoutButtonText}>
+            Cerrar sesión
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -176,6 +189,16 @@ const styles = StyleSheet.create({
   },
 
   actions: {
-  gap: 12,
+    gap: 12,
+  },
+
+  logoutButton: {
+  borderColor: '#dc2626',
+},
+
+logoutButtonText: {
+  fontSize: 16,
+  fontWeight: '600',
+  color: '#dc2626',
 },
 });
