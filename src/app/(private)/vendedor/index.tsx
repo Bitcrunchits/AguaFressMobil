@@ -11,6 +11,7 @@ import { useSession } from '@/features/auth/useSession';
 import { ApiError } from '@/lib/api/api.types';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { router } from 'expo-router';
+import { getOrders } from '@/features/orders/services/orders.service';
 
 
 export default function VendedorHomeScreen() {
@@ -25,11 +26,10 @@ export default function VendedorHomeScreen() {
   const [customerError, setCustomerError] =
     useState<string | null>(null);
 
+   // Cargar cartera de clientes
   useEffect(() => {
     async function loadCustomerPortfolio() {
-      if (!token) {
-        return;
-      }
+      if (!token) return;
 
       try {
         setIsLoadingCustomers(true);
@@ -54,6 +54,27 @@ export default function VendedorHomeScreen() {
     }
 
     loadCustomerPortfolio();
+  }, [token]);
+
+  // Consultar pedidos del vendedor
+  useEffect(() => {
+    
+    async function loadOrders() {
+      if (!token) return;
+      try {
+        const orders = await getOrders({ token });
+
+        console.log('[ORDERS] Cantidad:', orders.length);
+        console.log(
+          '[ORDERS] Respuesta:',
+          JSON.stringify(orders, null, 2)
+        );
+      } catch (error) {
+        console.error('[ORDERS] Error:', error);
+      }
+    }
+
+    loadOrders();
   }, [token]);
 
   async function handleSignOut() {
@@ -193,12 +214,12 @@ const styles = StyleSheet.create({
   },
 
   logoutButton: {
-  borderColor: '#dc2626',
-},
+    borderColor: '#dc2626',
+  },
 
-logoutButtonText: {
-  fontSize: 16,
-  fontWeight: '600',
-  color: '#dc2626',
-},
+  logoutButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#dc2626',
+  },
 });

@@ -17,6 +17,10 @@ export default function PublicLayout() {
     if (user?.role === 'cliente') {
       return <Redirect href="/cliente" />;
     }
+
+    if (user?.role === 'super_admin') {
+      return <Redirect href="/super-admin" />;
+    }
   }
 
   return <Stack screenOptions={{ headerShown: false }} />;

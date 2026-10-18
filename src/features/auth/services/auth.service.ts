@@ -16,3 +16,19 @@ export function login(
     }
   );
 }
+
+export type RefreshTokenResponse = {
+  token: string;
+};
+
+export function refreshAccessToken(
+  refreshToken: string
+): Promise<RefreshTokenResponse> {
+  return apiRequest<RefreshTokenResponse>(
+    '/api/v1/auth/refresh',
+    {
+      method: 'POST',
+      body: JSON.stringify({ refreshToken }),
+    }
+  );
+}

@@ -1,12 +1,23 @@
 import { useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+
+import {
+  authenticateWithBiometrics,
+  isBiometricAvailable,
+} from '@/features/auth/services/biometric.service';
+
+import {
+  isBiometricEnabled,
+  setBiometricEnabled,
+} from '@/lib/storage/secure-storage';
 
 import { login } from '@/features/auth/services/auth.service';
 import { useSession } from '@/features/auth/useSession';
@@ -24,6 +35,54 @@ export default function LoginScreen() {
   const [errorMessage, setErrorMessage] = useState<string | null>(
     null
   );
+
+  async function offerBiometricActivation() {
+    try {
+      const enabled = await isBiometricEnabled();
+
+      if (enabled) return;
+
+      const available = await isBiometricAvailable();
+
+      if (!available) return;
+
+      Alert.alert(
+        'Acceso biométrico',
+        '¿Querés utilizar tu huella digital o reconocimiento facial para desbloquear Aguafress en próximos ingresos?',
+        [
+          {
+            text: 'Ahora no',
+            style: 'cancel',
+          },
+          {
+            text: 'Activar',
+            onPress: async () => {
+              try {
+                const authenticated =
+                  await authenticateWithBiometrics();
+
+                if (authenticated) {
+                  await setBiometricEnabled(true);
+                } else {
+                  Alert.alert(
+                    'Biometría no activada',
+                    'No se pudo completar la verificación biométrica.'
+                  );
+                }
+              } catch {
+                Alert.alert(
+                  'Error',
+                  'No se pudo activar el acceso biométrico.'
+                );
+              }
+            },
+          },
+        ]
+      );
+    } catch {
+      // La biometría es opcional: no debe impedir el login.
+    }
+  }
 
   async function handleLogin() {
     if (isSubmitting) {
@@ -55,6 +114,7 @@ export default function LoginScreen() {
       });
 
       await signIn(response);
+      await offerBiometricActivation();
     } catch (error) {
       if (error instanceof ApiError) {
         if (error.type === 'API_UNAVAILABLE') {

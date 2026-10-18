@@ -5,6 +5,7 @@ import type { Session } from '@/features/auth/auth.types';
 const ACCESS_TOKEN_KEY = 'aguafress_access_token';
 const REFRESH_TOKEN_KEY = 'aguafress_refresh_token';
 const USER_KEY = 'aguafress_session_user';
+const BIOMETRIC_ENABLED_KEY = 'aguafress_biometric_enabled';
 
 export async function saveSession(session: Session): Promise<void> {
   await Promise.all([
@@ -56,5 +57,24 @@ export async function deleteSession(): Promise<void> {
     SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY),
     SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY),
     SecureStore.deleteItemAsync(USER_KEY),
+    SecureStore.deleteItemAsync(BIOMETRIC_ENABLED_KEY),
   ]);
 }
+
+export async function setBiometricEnabled(
+  enabled: boolean
+): Promise<void> {
+  await SecureStore.setItemAsync(
+    BIOMETRIC_ENABLED_KEY,
+    enabled ? 'true' : 'false'
+  );
+}
+
+export async function isBiometricEnabled(): Promise<boolean> {
+  const value = await SecureStore.getItemAsync(
+    BIOMETRIC_ENABLED_KEY
+  );
+
+  return value === 'true';
+}
+
